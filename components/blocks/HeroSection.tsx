@@ -12,7 +12,8 @@ export type HeroSectionProps = {
 };
 
 export function HeroSection({blok}: HeroSectionProps): ReactElement {
-    const cta = blok.cta[0];
+    const cta = blok.cta?.[0];
+    const ctaUrl = cta?.link?.cached_url;
     const croct = useCroct();
 
     return (
@@ -28,13 +29,15 @@ export function HeroSection({blok}: HeroSectionProps): ReactElement {
                                 {renderMarkdown(blok.tagline)}
                             </div>
                         )}
-                        <Link
-                            onClick={() => croct.track('goalCompleted', {goalId: 'hero-cta-click'})}
-                            href={cta?.link.cached_url}
-                            className="mt-8 self-start rounded-full bg-primary px-8 py-3 text-base font-medium text-white text-center hover:bg-primary/85 transition-colors"
-                        >
-                            {cta?.label}
-                        </Link>
+                        {cta != null && ctaUrl != null && (
+                            <Link
+                                onClick={() => croct.track('goalCompleted', {goalId: 'hero-cta-click'})}
+                                href={ctaUrl}
+                                className="mt-8 self-start rounded-full bg-primary px-8 py-3 text-base font-medium text-white text-center hover:bg-primary/85 transition-colors"
+                            >
+                                {cta.label}
+                            </Link>
+                        )}
                     </div>
                     <div className="relative min-h-[60vh] lg:min-h-0 lg:w-1/2 overflow-hidden order-3 lg:order-none">
                         <Image

@@ -13,15 +13,16 @@ export type AnnouncementBarProps = {
 export function AnnouncementBar({blok}: AnnouncementBarProps): ReactElement {
     const croct = useCroct();
     const cta = blok.cta?.[0];
+    const ctaUrl = cta?.link?.cached_url;
 
     return (
         <div {...storyblokEditable(blok)} className="bg-primary text-white text-sm text-center py-2.5 px-6">
             <p>
                 {renderMarkdown(blok.text, {code: 'bg-white/15 rounded px-1.5 py-0.5 font-semibold tracking-wide'})}{' '}
-                {cta != null && (
+                {cta != null && ctaUrl != null && (
                     <Link
                         onClick={() => void croct.track('goalCompleted', {goalId: 'announcement-bar-click'})}
-                        href={cta?.link.cached_url}
+                        href={ctaUrl}
                         className="underline underline-offset-2 hover:text-white/80 transition-colors"
                     >
                         {cta.label}
