@@ -6,6 +6,7 @@ import type {ReactElement} from 'react';
 import {useCroct} from '@croct/plug-next';
 import type {HeroSection as HeroSectionBlok} from '@/.storyblok/types/289964601464397/storyblok-components';
 import {renderMarkdown} from '@/lib/markdown';
+import {resolveLinkUrl} from '@/lib/link';
 
 export type HeroSectionProps = {
     blok: SbBlokData & HeroSectionBlok,
@@ -13,7 +14,7 @@ export type HeroSectionProps = {
 
 export function HeroSection({blok}: HeroSectionProps): ReactElement {
     const cta = blok.cta?.[0];
-    const ctaUrl = cta?.link?.cached_url;
+    const ctaUrl = resolveLinkUrl(cta?.link);
     const croct = useCroct();
 
     return (
