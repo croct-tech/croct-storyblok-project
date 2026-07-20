@@ -5,6 +5,7 @@ import type {ReactElement} from 'react';
 import {useCroct} from '@croct/plug-next';
 import type {AnnouncementBar as AnnouncementBarBlok} from '@/.storyblok/types/289964601464397/storyblok-components';
 import {renderMarkdown} from '@/lib/markdown';
+import {resolveLinkUrl} from '@/lib/link';
 
 export type AnnouncementBarProps = {
     blok: SbBlokData & AnnouncementBarBlok,
@@ -13,7 +14,7 @@ export type AnnouncementBarProps = {
 export function AnnouncementBar({blok}: AnnouncementBarProps): ReactElement {
     const croct = useCroct();
     const cta = blok.cta?.[0];
-    const ctaUrl = cta?.link?.cached_url;
+    const ctaUrl = resolveLinkUrl(cta?.link);
 
     return (
         <div {...storyblokEditable(blok)} className="bg-primary text-white text-sm text-center py-2.5 px-6">
